@@ -28,7 +28,7 @@ public class Deck {
 	createSuit(Suite.DIAMONDS);
 	createSuit(Suite.HEARTS);
 	createSuit(Suite.CLUBS);
-	createSuit(Suite.DIAMONDS);
+	createSuit(Suite.SPADES);
     }
     
     /***
@@ -48,13 +48,14 @@ public class Deck {
      * @param suite - The suit to create.
      */
     private void createSuit (Suite suite){
-	int cardsInSuite = 10, faceCards = 4;
+	int cardsInSuite = 9, faceCards = 4;
 	for(int i = 0; i < cardsInSuite; i++){
 	    Card c = new NumericCard(cardValues[i], suite);
 	    deck.add(c);
 	}
 	for (int i = 0; i < faceCards; i++) {
-	    Card c = new FaceCard(cardValues[i+10], suite, faceValues[i]);
+	    Card c = new FaceCard(cardValues[i+9], suite, faceValues[i]);
+	    deck.add(c);
 	}
     }
 
