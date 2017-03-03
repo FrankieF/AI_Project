@@ -13,7 +13,6 @@ public class FaceCard extends Card {
     public FaceCard(int value, Suite suite, String faceValue) {
 	super(value, suite);
 	this.faceValue = faceValue;
-	// TODO Auto-generated constructor stub
     }
     
     public String getFaceValue() {

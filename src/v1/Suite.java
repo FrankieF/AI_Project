@@ -8,5 +8,5 @@ package v1;
  */
 public enum Suite
 	{
-		DIAMONDS, HEARTS, CLUBS, SPADES
+		DIAMONDS, HEARTS, CLUBS, SPADES, MAX
 	}

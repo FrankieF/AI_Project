@@ -2,6 +2,7 @@ package v1;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Represnts a standard deck of 52 playing cards for a game of blackjack.
@@ -12,33 +13,36 @@ import java.util.List;
  */
 public class Deck {
     
+    private static Deck deck;
+    public static Deck getDeck() {
+	return deck == null ? deck = new Deck() : deck;
+    }
+    
     // The numeric values cards can have
     private final int[] cardValues = {2,3,4,5,6,7,8,9,10,10,10,10,11};
     private final String[] faceValues = {"Jack", "Queen", "King", "Ace"};
     public static final int NUMBER_OF_CARDS = 52; 
-    private List<Card> deck;
+    private List<Card> usedCards, readyCards;
     
     /***
      * Create a new deck by initlizing the 52 cards.
      * 
      * @author Francis Fasola
      */
-    public Deck() {
-	deck = new ArrayList<Card>();
+    private Deck() {
+	usedCards = new ArrayList<Card>();
+	readyCards = new ArrayList<Card>();
 	createSuit(Suite.DIAMONDS);
 	createSuit(Suite.HEARTS);
 	createSuit(Suite.CLUBS);
 	createSuit(Suite.SPADES);
     }
     
-    /***
-     * Returns the deck of cards.
-     * 
-     * @author Francis Fasola
-     * @return The deck of cards.
-     */
-    public List<Card> getDeck() {
-	return this.deck;
+    public List<Card> getUsedCards() {
+        return usedCards;
+    }
+    public List<Card> getReadyCards() {
+        return readyCards;
     }
     
     /***
@@ -51,12 +55,25 @@ public class Deck {
 	int cardsInSuite = 9, faceCards = 4;
 	for(int i = 0; i < cardsInSuite; i++){
 	    Card c = new NumericCard(cardValues[i], suite);
-	    deck.add(c);
+	    readyCards.add(c);
 	}
 	for (int i = 0; i < faceCards; i++) {
 	    Card c = new FaceCard(cardValues[i+9], suite, faceValues[i]);
-	    deck.add(c);
+	    readyCards.add(c);
 	}
+    }
+    
+    public void shuffle() {
+	List<Card> deck = new ArrayList<Card>();
+	int max = deck.size();
+	while (max > 0) {
+	    Random r = new Random();
+	    int offset = r.nextInt(NUMBER_OF_CARDS);
+	    deck.add(readyCards.get(offset));
+	    readyCards.remove(offset);
+	    max--;
+	}
+	readyCards = deck;
     }
 
 }

@@ -10,9 +10,13 @@ package v1;
 public class GameLogic {
 
     public static void main(String[] args) {
-	Deck d = new Deck();
-	for(Card c : d.getDeck())
-	    System.out.format("Card: %d %s\n", c.getValue(), c.getSuite().toString());
+	Deck d = Deck.getDeck();
+	for(Card c : d.getReadyCards())	    
+	    if (c instanceof FaceCard)
+		System.out.format("Card: %d %s %s\n", c.getValue(), c.getSuite().toString(), ((FaceCard) c).getFaceValue());
+	    else
+		System.out.format("Card: %d %s\n", c.getValue(), c.getSuite().toString());
+	
 
     }
 
