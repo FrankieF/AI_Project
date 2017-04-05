@@ -22,5 +22,13 @@ public class FaceCard extends Card {
     public void setFaceValue(String s) {
 	this.faceValue = s;
     }
+    
+    /**
+     * Displays face card
+     */
+    @Override
+   public String toString(){
+       return faceValue + "" + getSuite();
+   }
 
 }
