@@ -36,13 +36,5 @@ public abstract class Card
 	    this.isHidden = isHidden;
 	}
 	
-	/**
-	 * Displays card
-	 */
-	@Override
-	public String toString(){
-	    return value + "" + suite;
-	}
-	
 	
 }
