@@ -36,5 +36,22 @@ public abstract class Card
 	    this.isHidden = isHidden;
 	}
 	
+	/**
+	 *Checks if card is Ace
+	 * @return
+	 */
+	public boolean isAce(){
+	    return getValue() == 11;
+	}
+	
+	/**
+	 * Displays card
+	 */
+	@Override
+	public String toString(){
+	    return value + "" + suite;
+	}
+	
 	
 }
+
