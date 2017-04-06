@@ -75,5 +75,32 @@ public class Deck {
 	}
 	readyCards = deck;
     }
+    
+    /**
+     * Returns cards from the used deck to the ready deck.
+     * 
+     * @author Francis Fasola
+     * @param shuffle - Determines if the returned cards are shuffled
+     */
+    public void returnCards(boolean shuffle) {
+	for (Card c : usedCards)
+	    readyCards.add(c);
+	usedCards.clear();
+	if (shuffle)
+	    shuffle();
+    }
+    
+    /**
+     * Returns the card on top of the deck.
+     * 
+     * @author Francis Fasola
+     * @return The card on top of the deck.
+     */
+    public Card deal() {
+	int top = readyCards.size();
+	Card c = readyCards.remove(top);
+	usedCards.add(c);
+	return c;
+    }
 
 }

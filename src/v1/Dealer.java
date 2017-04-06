@@ -14,6 +14,7 @@ public class Dealer {
     
     private Deck deck;
     private int score;
+    private GameState currentState, nextState;
     
     public Deck getDeck() {
         return deck;
@@ -27,6 +28,12 @@ public class Dealer {
     public void setScore(int score) {
         this.score = score;
     }
+    public GameState getState() {
+	return currentState;
+    }
+    public void setState(GameState state) {
+	this.currentState = state;
+    }
     
     /***
      * Creates a new dealer initialized with a deck of cards.
@@ -37,6 +44,45 @@ public class Dealer {
 	deck = Deck.getDeck();
 	deck.shuffle();
     }
+    
+    public void update() {
+	switch (currentState) {
+	case Deal :
+	    deal();
+	    break;
+	case Hit :
+	    tryHit();
+	    break;
+	case Stay :
+	    stay();
+	    break;
+	case Reset :
+	    break;
+	default :
+	    System.err.println("Error: Dealer not in valid state!");
+		
+	}
+    }
+    
+    public void tryHit() {
+	if (score < 17)
+	    hit();
+    }
+    
+    private void hit() {
+	
+    }
+    
+    private void stay() {
+	
+    }
+    
+    private void deal() {
+	
+    }
+    
+    
+    
     
     
 }
