@@ -37,6 +37,14 @@ public abstract class Card
 	}
 	
 	/**
+	 *Checks if card is Ace
+	 * @return
+	 */
+	public boolean isAce(){
+	    return getValue() == 11;
+	}
+	
+	/**
 	 * Displays card
 	 */
 	@Override

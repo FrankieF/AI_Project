@@ -13,6 +13,7 @@ public class Hand {
     private int handSize;  //number of cards in hand
     private int handScore; //score of card values in hand
     private final int BLACKJACK_VALUE = 21;
+    private final int ACE_VALUE = 11;
     
    /**
     * Hand constructor creates a new hand
@@ -72,8 +73,15 @@ public class Hand {
    */
   public void addCard(Card c){
       hand.add(c);
-      handSize++;
+      //if card is ace check for bust 
+      //if so ace value becomes 1 
+      if(c.isAce() && (handScore + ACE_VALUE > BLACKJACK_VALUE)){
+	  handScore++;
+      }
+      else{
       handScore += c.getValue();
+      }
+      handSize++;
   }
   
   /**
