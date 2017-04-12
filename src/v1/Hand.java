@@ -12,14 +12,17 @@ public class Hand {
     private ArrayList <Card> hand; //player's hand is an ArrayList of cards
     private int handSize;  //number of cards in hand
     private int handScore; //score of card values in hand
+    private int scoreNeeded; // score needed to get blackjack
     private final int BLACKJACK_VALUE = 21;
     private final int ACE_VALUE = 11;
+    
     
    /**
     * Hand constructor creates a new hand
     */
   public Hand(){
       hand = new ArrayList<Card>();
+      scoreNeeded = 21;
   }
   
   /**
@@ -32,6 +35,7 @@ public class Hand {
       for(Card c : hand){
 	  handSize++;
 	  handScore += c.getValue();
+	  scoreNeeded = BLACKJACK_VALUE - handScore;
       }
   }
   
@@ -67,6 +71,17 @@ public class Hand {
       this.handScore = handScore;
   }
   
+  public int getScoreNeeded(){
+      if(handScore >= 21){
+	  return 0;
+      }
+      return scoreNeeded;
+  }
+  
+  public void setScoreNeeded(int scoreNeeded){
+      this.scoreNeeded = scoreNeeded;
+  }
+  
   /**
    * adds a card to the hand
    * @param c
@@ -82,6 +97,7 @@ public class Hand {
       handScore += c.getValue();
       }
       handSize++;
+      scoreNeeded = BLACKJACK_VALUE - handScore;
   }
   
   /**
