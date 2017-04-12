@@ -18,7 +18,6 @@ public class Driver {
     private static Scanner scnr = new Scanner(System.in);
 
     public static void main(String[] args) {
-
 	System.out.println("Welcome to BlackJack! To start playing type 1.");
 	String response;
 	do{
@@ -37,6 +36,7 @@ public class Driver {
 	d1.addPlayer(human);
 	d1.addPlayer(robot);
 	d1.addPlayer(d1);
+
 	GetBets();
 	Deal();
 	
@@ -45,6 +45,7 @@ public class Driver {
     
     private static void GetBets(){
 	
+
 
 	System.out.println("Please enter bet.");
 	String bet;
@@ -64,6 +65,7 @@ public class Driver {
 	System.out.println("Dealer: " + d1);
 	System.out.println("You: " + human);
 	System.out.println("Robot: " + robot);
+
 
     }
     

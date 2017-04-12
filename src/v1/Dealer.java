@@ -45,35 +45,21 @@ public class Dealer extends Player {
      */
     public Dealer() {
 	super();
+
 	deck = deck.getDeck();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	deck.shuffle();      
+  deck.shuffle();      
 	gameNumber = 0;	
 	players = new ArrayList<Player>();
 	
-   
+
     }
  
     
 
+
     public List<Player> getPlayers(){
 	return players;
+
 
     }
     
