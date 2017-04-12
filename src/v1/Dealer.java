@@ -32,7 +32,7 @@ public class Dealer extends Player {
     }
     public void setDeck(Deck deck) {
         this.deck = deck;
-    }    
+    }    	
     public int getScore() {
         return score;
     }
@@ -47,7 +47,7 @@ public class Dealer extends Player {
      */
     public Dealer() {
 	super();
-	deck = Deck.getDeck();
+	deck = deck.getDeck();
 	deck.shuffle();      
 	gameNumber = 0;	
 	players = new ArrayList<Player>();
@@ -107,8 +107,6 @@ public class Dealer extends Player {
     
     public static void main (String args []){
 	Dealer d1 = new Dealer();
-	Card c = new NumericCard(11, Suite.DIAMONDS);
-	d1.addCardToHand(c);
 	System.out.println(d1);
     }
     

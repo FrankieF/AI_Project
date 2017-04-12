@@ -35,6 +35,7 @@ public class Driver {
 	robot = new AIPlayer();	
 	d1.addPlayer(human);
 	d1.addPlayer(robot);
+	d1.addPlayer(d1);
 	GetBets();
 	Deal();
 	
@@ -57,6 +58,9 @@ public class Driver {
     }
     
     private static void Deal(){
+	System.out.println(d1.getDeck().getReadyCards());
+	d1.getDeck().getReadyCards().add(new NumericCard(9, Suite.DIAMONDS));
+	System.out.println(d1.getDeck().getReadyCards());
 	d1.dealHand();
 	System.out.println("Dealer: " + d1);
 	System.out.println("You: " + human);
