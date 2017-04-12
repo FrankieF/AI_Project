@@ -12,14 +12,8 @@ import java.util.ArrayList;
 
 public class Dealer extends Player {
     
-    private static Dealer dealer = null;
-    public static Dealer getDealer() {
-	return dealer == null ? new Dealer() : dealer;
-    }
-    
     private Deck deck;
-    private int score, gameNumber;
-    private final int SHUFFLE_DECK = 3;
+    private int score;
     private GameState currentState, nextState;
     
     public Deck getDeck() {
@@ -50,7 +44,6 @@ public class Dealer extends Player {
 	super();
 	deck = Deck.getDeck();
 	deck.shuffle();
-	gameNumber = 0;
     }
     
     public void update() {
@@ -58,8 +51,11 @@ public class Dealer extends Player {
 	case Deal :
 	    dealHand();
 	    break;
-	case Think:
+	case Hit :
 	    tryHit();
+	    break;
+	case Stay :
+	    stay();
 	    break;
 	case Reset :
 	    resetGame();
@@ -86,15 +82,20 @@ public class Dealer extends Player {
     }
     
     private void resetGame() {
-	gameNumber++;
-	for (Player p : GameLogic.getPlayers())
-	    p.getHand().clearHand();
-	if (gameNumber >= SHUFFLE_DECK) {
-	    gameNumber = 0;
-	    deck.returnCards(true);
-	} else
-	    deck.shuffle();
-	dealHand();
+	deck.shuffle();
+    }
+    
+    
+    @Override
+    public void addCardToHand(Card card){
+	//dealer's first card is face down
+	if(hand.isEmpty()){
+	    card.setHidden(true);
+	    hand.addCard(card);
+	}
+	else{
+	    hand.addCard(card);
+	}
     }
     
     /***
@@ -103,12 +104,16 @@ public class Dealer extends Player {
      */
     private void dealHand() {
 	for (int i = 0; i < 2; i++)
-	    for (Player p : GameLogic.getPlayers()) {
+	    for (Player p : GameLogic.getPlayers())
 		p.addCardToHand(deck.dealCard());
-		if(p.isBlackJack()) {
-		    
-		}
-	    }
+	
+    }
+    
+    public static void main (String args []){
+	Dealer d1 = new Dealer();
+	Card c = new NumericCard(11, Suite.DIAMONDS);
+	d1.addCardToHand(c);
+	System.out.println(d1);
     }
     
     
