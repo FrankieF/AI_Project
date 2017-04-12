@@ -126,6 +126,10 @@ public class Hand {
       return handScore > BLACKJACK_VALUE;
   }
   
+  public boolean isBlackJack(){
+      return handScore == BLACKJACK_VALUE;
+  }
+  
   /**
    * displays cards in hand
    */
