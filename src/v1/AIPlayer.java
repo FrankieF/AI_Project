@@ -16,7 +16,7 @@ public class AIPlayer extends Player {
 	else
 	    return Dealer.getDealer().MIN_BET;
     }
-    
+
     public int count() {
 	int count = 0;
 	for (Card c : Deck.getDeck().getUsedCards()) {
@@ -35,7 +35,7 @@ public class AIPlayer extends Player {
 	}
 	return count;
     }
-    
+
     /**
      * Checks the cards remamining in the game to make a decision on whether to stay or hit.
      * @author Francis Fasola
@@ -43,7 +43,7 @@ public class AIPlayer extends Player {
      * @return A value 0-1 representing the percent of getting a card less than or equal
      * to the scoreNeeded.
      */
-    public double getChanceOfWinning(int scoreNeeded) {
+public double getChanceOfWinning(int scoreNeeded) {
 	if (scoreNeeded >= 10)
 	    return 1;
 	

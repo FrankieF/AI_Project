@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public class Dealer extends Player {
     
+
     private static Dealer dealer = null;
     public static Dealer getDealer() {
 	return dealer == null ? new Dealer() : dealer;
@@ -47,6 +48,7 @@ public class Dealer extends Player {
 	super();
 	deck = Deck.getDeck();
 	deck.shuffle();
+      
 	gameNumber = 0;
 	ai = new AIPlayer();
 	player = new Player();
@@ -60,6 +62,28 @@ public class Dealer extends Player {
 	dealHand();
 	tryHit();
 	resetGame();		
+
+    }
+    
+    public void update() {
+	switch (currentState) {
+	case Deal :
+	    dealHand();
+	    break;
+	case Hit :
+	    tryHit();
+	    break;
+	case Stay :
+	    stay();
+	    break;
+	case Reset :
+	    resetGame();
+	    break;
+	default :
+	    System.err.println("Error: Dealer not in valid state!");
+		
+	}
+
     }
     
     public void tryHit() {
@@ -72,15 +96,20 @@ public class Dealer extends Player {
     }
     
     private void resetGame() {
-	gameNumber++;
-	for (Player p : GameLogic.getPlayers())
-	    p.getHand().clearHand();
-	if (gameNumber >= SHUFFLE_DECK) {
-	    gameNumber = 0;
-	    deck.returnCards(true);
-	} else
-	    deck.shuffle();
-	dealHand();
+	deck.shuffle();
+    }
+    
+    
+    @Override
+    public void addCardToHand(Card card){
+	//dealer's first card is face down
+	if(hand.isEmpty()){
+	    card.setHidden(true);
+	    hand.addCard(card);
+	}
+	else{
+	    hand.addCard(card);
+	}
     }
     
     /***
@@ -89,12 +118,18 @@ public class Dealer extends Player {
      */
     public void dealHand() {
 	for (int i = 0; i < 2; i++)
+
 	    for (Player p : players) {
+
 		p.addCardToHand(deck.dealCard());
-		if(p.isBlackJack()) {
-		    
-		}
-	    }
+	
+    }
+    
+    public static void main (String args []){
+	Dealer d1 = new Dealer();
+	Card c = new NumericCard(11, Suite.DIAMONDS);
+	d1.addCardToHand(c);
+	System.out.println(d1);
     }
     
     
