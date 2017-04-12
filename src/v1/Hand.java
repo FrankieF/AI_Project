@@ -92,12 +92,20 @@ public class Hand {
       return handSize == 0;
   }
   
+  public boolean isBlackJack() {
+      return handScore == BLACKJACK_VALUE ? true : false;
+  }
+  
   /**
    * checks for player bust
    * @return
    */
   public boolean isBust(){
       return handScore > BLACKJACK_VALUE;
+  }
+  
+  public void clearHand() {
+      this.hand.clear();
   }
   
   /**

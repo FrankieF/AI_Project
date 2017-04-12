@@ -8,5 +8,5 @@
 package v1;
 
 public enum GameState {
-    Hit, Stay, Deal, Think, Bet, Reset
+    Hit, Stay, Deal, Think, Bet, Wait, Reset, Playing, Start, End
 }

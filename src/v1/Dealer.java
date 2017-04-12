@@ -10,10 +10,16 @@ package v1;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Dealer {
+public class Dealer extends Player {
+    
+    private static Dealer dealer = null;
+    public static Dealer getDealer() {
+	return dealer == null ? new Dealer() : dealer;
+    }
     
     private Deck deck;
-    private int score;
+    private int score, gameNumber;
+    private final int SHUFFLE_DECK = 3;
     private GameState currentState, nextState;
     
     public Deck getDeck() {
@@ -41,22 +47,22 @@ public class Dealer {
      * @author Francis Fasola
      */
     public Dealer() {
+	super();
 	deck = Deck.getDeck();
 	deck.shuffle();
+	gameNumber = 0;
     }
     
     public void update() {
 	switch (currentState) {
 	case Deal :
-	    deal();
+	    dealHand();
 	    break;
-	case Hit :
+	case Think:
 	    tryHit();
 	    break;
-	case Stay :
-	    stay();
-	    break;
 	case Reset :
+	    resetGame();
 	    break;
 	default :
 	    System.err.println("Error: Dealer not in valid state!");
@@ -67,18 +73,42 @@ public class Dealer {
     public void tryHit() {
 	if (score < 17)
 	    hit();
+	else
+	    setState(GameState.Stay);
     }
     
     private void hit() {
-	
+	this.hand.addCard(deck.dealCard());
     }
     
     private void stay() {
 	
     }
     
-    private void deal() {
-	
+    private void resetGame() {
+	gameNumber++;
+	for (Player p : GameLogic.getPlayers())
+	    p.getHand().clearHand();
+	if (gameNumber >= SHUFFLE_DECK) {
+	    gameNumber = 0;
+	    deck.returnCards(true);
+	} else
+	    deck.shuffle();
+	dealHand();
+    }
+    
+    /***
+     * Deals two cards to each player to start the round.
+     * @author Francis Fasola
+     */
+    private void dealHand() {
+	for (int i = 0; i < 2; i++)
+	    for (Player p : GameLogic.getPlayers()) {
+		p.addCardToHand(deck.dealCard());
+		if(p.isBlackJack()) {
+		    
+		}
+	    }
     }
     
     
