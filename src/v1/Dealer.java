@@ -48,8 +48,7 @@ public class Dealer extends Player {
     public Dealer() {
 	super();
 	deck = Deck.getDeck();
-	deck.shuffle();
-      
+	deck.shuffle();      
 	gameNumber = 0;	
 	players = new ArrayList<Player>();
 	
