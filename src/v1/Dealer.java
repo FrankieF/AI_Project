@@ -23,8 +23,6 @@ public class Dealer extends Player {
     private int score, gameNumber;
     private final int SHUFFLE_DECK = 3;
     public final int MIN_BET = 50;
- 
-   
     
     
     public Deck getDeck() {
@@ -48,16 +46,19 @@ public class Dealer extends Player {
     public Dealer() {
 	super();
 	deck = Deck.getDeck();
+
 	deck.shuffle();      
 	gameNumber = 0;	
 	players = new ArrayList<Player>();
 	
-      
+   
     }
  
     
+
     public List<Player> getPlayers(){
 	return players;
+
     }
     
     public void addPlayer(Player player){
