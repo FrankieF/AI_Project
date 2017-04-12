@@ -25,6 +25,10 @@ public class Dealer extends Player {
     private int score, gameNumber;
     private final int SHUFFLE_DECK = 3;
     public final int MIN_BET = 50;
+   
+    
+   
+    
     
     public Deck getDeck() {
         return deck;
@@ -56,9 +60,19 @@ public class Dealer extends Player {
 	players.add(player);
 	players.add(ai);
 	players.add(this);
+      
+    }
+ 
+    
+    
+    public void update() {
+	dealHand();
+	tryHit();
+	resetGame();		
+
+
     }
     
-   
     
     public void tryHit() {
 	if (score < 17)
