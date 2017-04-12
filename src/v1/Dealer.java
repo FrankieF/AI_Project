@@ -16,6 +16,7 @@ public class Dealer extends Player {
     private int score;
     private GameState currentState, nextState;
     
+    
     public Deck getDeck() {
         return deck;
     }
