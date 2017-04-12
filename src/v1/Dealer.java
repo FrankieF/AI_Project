@@ -26,6 +26,7 @@ public class Dealer extends Player {
     private final int SHUFFLE_DECK = 3;
     public final int MIN_BET = 50;
     
+    
     public Deck getDeck() {
         return deck;
     }
