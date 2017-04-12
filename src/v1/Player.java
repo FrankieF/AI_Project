@@ -9,9 +9,8 @@ package v1;
  */
 public class Player {
 
-    protected Hand hand;
-    protected Chips chips;
-    protected boolean stay = false;
+    Hand hand;
+    Chips chips;
     
     public Player() {
 	hand = new Hand();
@@ -19,29 +18,14 @@ public class Player {
     }
     
     public void update() {
-	while (!hand.isBust() && !hand.isBlackJack() && !stay) {
-	    
-	}
-    }
-    
-    public boolean isBlackJack() {
-	return hand.getHandScore() == 21 ? true : false;
-	    
+	
     }
     
     public void addCardToHand(Card card) {
 	hand.addCard(card);
     }
     
-    public Hand getHand() {
-	return this.hand;
-    }
-    
-    public void bet(int amount) {
-	this.chips.checkBet(amount);
-    }
-    
-    public boolean outOfMoney() {
-	return this.chips.noChips();
+    public String toString(){
+	return hand + "";
     }
 }

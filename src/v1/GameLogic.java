@@ -11,9 +11,7 @@ import java.util.ArrayList;
  */
 public class GameLogic {
 
-    private Dealer dealer;
-    private Player player;
-    private AIPlayer ai;
+    private Dealer d;
     
     private static ArrayList<Player> players;
     /***
@@ -29,12 +27,6 @@ public class GameLogic {
     
     public void setState(GameState state) {
 	this.state = state;
-    }
-    
-    public GameLogic () {
-	this.dealer = new Dealer();
-	this.player = new Player();
-	this.ai = new AIPlayer();
     }
     
     public void update() {
@@ -64,13 +56,16 @@ public class GameLogic {
     }
     
     private void createPlayers() {
-	players.add(player);
-	players.add(ai);
-	players.add(dealer);
+	d = new Dealer();
+	Player p = new Player();
+	AIPlayer a = new AIPlayer();
+	players.add(p);
+	players.add(a);
+	players.add(d);
     }
     
     private void deal() {
-	dealer.setState(GameState.Deal);
+	d.setState(GameState.Deal);
     }
     
     private void playGame() {
@@ -79,8 +74,6 @@ public class GameLogic {
 	    for (Player p : players) {
 		p.update();
 	    }
-	    isPlaying = player.outOfMoney();
-	    dealer.setState(GameState.Reset);
 	}
 	setState(GameState.End);
     }
