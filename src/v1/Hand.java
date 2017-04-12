@@ -13,6 +13,7 @@ public class Hand {
     private int handSize;  //number of cards in hand
     private int handScore; //score of card values in hand
     private int scoreNeeded; // score needed to get blackjack
+    private int bet;
     private final int BLACKJACK_VALUE = 21;
     private final int ACE_VALUE = 11;
     
@@ -20,9 +21,10 @@ public class Hand {
    /**
     * Hand constructor creates a new hand
     */
-  public Hand(){
+  public Hand(int bet){
       hand = new ArrayList<Card>();
       scoreNeeded = 21;
+      this.bet = bet;
   }
   
   /**
@@ -80,6 +82,14 @@ public class Hand {
   
   public void setScoreNeeded(int scoreNeeded){
       this.scoreNeeded = scoreNeeded;
+  }
+  
+  public int getBet(){
+      return bet;
+  }
+  
+  public void setBet(int bet){
+      this.bet=bet;
   }
   
   /**

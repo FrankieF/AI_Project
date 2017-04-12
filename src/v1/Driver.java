@@ -33,6 +33,8 @@ public class Driver {
 	d1 = new Dealer();
 	human = new Player();
 	robot = new AIPlayer();	
+	d1.addPlayer(human);
+	d1.addPlayer(robot);
 	GetBets();
 	Deal();
 	
@@ -41,9 +43,24 @@ public class Driver {
     
     private static void GetBets(){
 	
+	System.out.println("Please enter bet.");
+	String bet;
+	do{
+	    System.out.println("The minimum bet is 10.");
+	    bet = scnr.next();
+	}
+	while(Integer.parseInt(bet) < 10);
+	human.setHandBet(Integer.parseInt(bet));
+	
+	//To do AI code
+	
     }
     
     private static void Deal(){
+	d1.dealHand();
+	System.out.println("Dealer: " + d1);
+	System.out.println("You: " + human);
+	System.out.println("Robot: " + robot);
     }
     
 }

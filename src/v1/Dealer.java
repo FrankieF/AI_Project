@@ -19,14 +19,11 @@ public class Dealer extends Player {
     }
     
     private List<Player> players;
-    private Player player;
-    private AIPlayer ai;
     private Deck deck;
     private int score, gameNumber;
     private final int SHUFFLE_DECK = 3;
     public final int MIN_BET = 50;
-   
-    
+ 
    
     
     
@@ -53,24 +50,19 @@ public class Dealer extends Player {
 	deck = Deck.getDeck();
 	deck.shuffle();
       
-	gameNumber = 0;
-	ai = new AIPlayer();
-	player = new Player();
+	gameNumber = 0;	
 	players = new ArrayList<Player>();
-	players.add(player);
-	players.add(ai);
-	players.add(this);
+	
       
     }
  
     
+    public List<Player> getPlayers(){
+	return players;
+    }
     
-    public void update() {
-	dealHand();
-	tryHit();
-	resetGame();		
-
-
+    public void addPlayer(Player player){
+	this.players.add(player);
     }
     
     

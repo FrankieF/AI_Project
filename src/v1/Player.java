@@ -13,7 +13,7 @@ public class Player {
     Chips chips;
     
     public Player() {
-	hand = new Hand();
+	hand = new Hand(0);
 	chips = new Chips(500);
     }
     
@@ -21,11 +21,43 @@ public class Player {
 	
     }
     
+    public Hand getHand(){
+	return hand;
+    }
+    
+    public void setHand(Hand hand){
+	this.hand = hand;
+    }
+    
+    public int getHandBet(){
+	return hand.getBet();
+    }
+    
+    public void setHandBet(int bet){
+	this.hand.setBet(bet);
+    }
+    
     public void addCardToHand(Card card) {
 	hand.addCard(card);
     }
     
+    public Chips getChips(){
+	return chips;
+    }
+    
+    public void setChips(Chips chips){
+	this.chips = chips;
+    }
+    
+    public void lostHand(){
+	this.chips.removeAmount(hand.getBet());;
+    }
+    
+    public void wonHand(){
+	this.chips.addAmount(hand.getBet());
+    }
+    
     public String toString(){
-	return hand + "";
+	return hand + " $" + hand.getBet();
     }
 }
