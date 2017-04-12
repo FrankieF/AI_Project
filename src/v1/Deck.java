@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * Represnts a standard deck of 52 playing cards for a game of blackjack.
  * 
- * @author Frankie Fasola, Mike Ginn
+ * @author Frankie Fasola, Michael Ginn
  * @version 3/2/17
  *
  */

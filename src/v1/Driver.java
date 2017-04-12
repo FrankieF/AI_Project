@@ -6,7 +6,7 @@ package v1;
 import java.util.Scanner;
 
 /**
- * @author Frankie Fasola
+ * @author Frankie Fasola Michael Ginn
  *
  */
 public class Driver {
