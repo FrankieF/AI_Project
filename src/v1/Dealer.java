@@ -19,8 +19,6 @@ public class Dealer extends Player {
     }
     
     private List<Player> players;
-    private Player player;
-    private AIPlayer ai;
     private Deck deck;
     private int score, gameNumber;
     private final int SHUFFLE_DECK = 3;
@@ -48,44 +46,25 @@ public class Dealer extends Player {
     public Dealer() {
 	super();
 	deck = Deck.getDeck();
-	deck.shuffle();
-      
-	gameNumber = 0;
-	ai = new AIPlayer();
-	player = new Player();
+
+	deck.shuffle();      
+	gameNumber = 0;	
 	players = new ArrayList<Player>();
-	players.add(player);
-	players.add(ai);
-	players.add(this);
+	
+   
     }
+ 
     
-    public void update() {
-	dealHand();
-	tryHit();
-	resetGame();		
+
+    public List<Player> getPlayers(){
+	return players;
 
     }
     
-    public void update() {
-	switch (currentState) {
-	case Deal :
-	    dealHand();
-	    break;
-	case Hit :
-	    tryHit();
-	    break;
-	case Stay :
-	    stay();
-	    break;
-	case Reset :
-	    resetGame();
-	    break;
-	default :
-	    System.err.println("Error: Dealer not in valid state!");
-		
-	}
-
+    public void addPlayer(Player player){
+	this.players.add(player);
     }
+    
     
     public void tryHit() {
 	if (score < 17)
@@ -124,6 +103,7 @@ public class Dealer extends Player {
 
 		p.addCardToHand(deck.dealCard());
 	
+    }
     }
     
     public static void main (String args []){
