@@ -17,10 +17,13 @@ public class Dealer extends Player {
 	return dealer == null ? new Dealer() : dealer;
     }
     
+    private List<Player> players;
+    private Player player;
+    private AIPlayer ai;
     private Deck deck;
     private int score, gameNumber;
     private final int SHUFFLE_DECK = 3;
-    private GameState currentState, nextState;
+    public final int MIN_BET = 50;
     
     public Deck getDeck() {
         return deck;
@@ -34,12 +37,6 @@ public class Dealer extends Player {
     public void setScore(int score) {
         this.score = score;
     }
-    public GameState getState() {
-	return currentState;
-    }
-    public void setState(GameState state) {
-	this.currentState = state;
-    }
     
     /***
      * Creates a new dealer initialized with a deck of cards.
@@ -51,38 +48,27 @@ public class Dealer extends Player {
 	deck = Deck.getDeck();
 	deck.shuffle();
 	gameNumber = 0;
+	ai = new AIPlayer();
+	player = new Player();
+	players = new ArrayList<Player>();
+	players.add(player);
+	players.add(ai);
+	players.add(this);
     }
     
     public void update() {
-	switch (currentState) {
-	case Deal :
-	    dealHand();
-	    break;
-	case Think:
-	    tryHit();
-	    break;
-	case Reset :
-	    resetGame();
-	    break;
-	default :
-	    System.err.println("Error: Dealer not in valid state!");
-		
-	}
+	dealHand();
+	tryHit();
+	resetGame();		
     }
     
     public void tryHit() {
 	if (score < 17)
 	    hit();
-	else
-	    setState(GameState.Stay);
     }
     
     private void hit() {
 	this.hand.addCard(deck.dealCard());
-    }
-    
-    private void stay() {
-	
     }
     
     private void resetGame() {
@@ -101,9 +87,9 @@ public class Dealer extends Player {
      * Deals two cards to each player to start the round.
      * @author Francis Fasola
      */
-    private void dealHand() {
+    public void dealHand() {
 	for (int i = 0; i < 2; i++)
-	    for (Player p : GameLogic.getPlayers()) {
+	    for (Player p : players) {
 		p.addCardToHand(deck.dealCard());
 		if(p.isBlackJack()) {
 		    
