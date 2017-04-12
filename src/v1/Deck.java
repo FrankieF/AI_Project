@@ -96,7 +96,7 @@ public class Deck {
      * @author Francis Fasola
      * @return The card on top of the deck.
      */
-    public Card deal() {
+    public Card dealCard() {
 	int top = readyCards.size();
 	Card c = readyCards.remove(top);
 	usedCards.add(c);
