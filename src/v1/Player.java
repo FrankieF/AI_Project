@@ -57,6 +57,10 @@ public class Player {
 	this.chips.addAmount(hand.getBet());
     }
     
+    public boolean hasBlackjack(){
+	return hand.isBlackJack();
+    }
+    
     public String toString(){
 	return hand + " $" + hand.getBet();
     }
