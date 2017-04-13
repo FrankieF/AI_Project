@@ -47,13 +47,11 @@ public class Dealer extends Player {
 	super();
 
 	deck = deck.getDeck();
-  deck.shuffle();      
+	deck.shuffle();      
 	gameNumber = 0;	
 	players = new ArrayList<Player>();
-	
-
+   
     }
- 
     
 
 
@@ -81,6 +79,11 @@ public class Dealer extends Player {
 	deck.shuffle();
     }
     
+    @Override
+    public String toString(){
+	return getHand() + "";
+    }
+    
     
     @Override
     public void addCardToHand(Card card){
@@ -103,9 +106,16 @@ public class Dealer extends Player {
 
 	    for (Player p : players) {
 
-		p.addCardToHand(deck.dealCard());
-	
+		p.addCardToHand(deck.dealCard());	
     }
+    }
+    
+    /**
+     * Hits a player in game
+     * @param player
+     */
+    public void hitPlayer(Player player){
+	player.addCardToHand(deck.dealCard());
     }
     
     public static void main (String args []){
