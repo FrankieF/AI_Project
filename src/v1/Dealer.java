@@ -45,6 +45,7 @@ public class Dealer extends Player {
      */
     public Dealer() {
 	super();
+
 	deck = deck.getDeck();
 	deck.shuffle();      
 	gameNumber = 0;	
@@ -53,8 +54,10 @@ public class Dealer extends Player {
     }
     
 
+
     public List<Player> getPlayers(){
 	return players;
+
 
     }
     

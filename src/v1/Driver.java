@@ -17,7 +17,6 @@ public class Driver {
     private static Scanner scnr = new Scanner(System.in);
 
     public static void main(String[] args) {
-
 	System.out.println("Welcome to BlackJack! To start playing type 1.");
 	String response;
 	do{
@@ -36,11 +35,13 @@ public class Driver {
 	d1.addPlayer(human);
 	d1.addPlayer(robot);
 	d1.addPlayer(d1);
+
 	getBets();
 	deal();
 	checkForBlackJack();
 	humanTurn();
 	robotTurn();		
+
     }
     
     /**
@@ -48,7 +49,9 @@ public class Driver {
      */
     private static void getBets(){
 
+
 	//player gets bet
+
 	System.out.println("Please enter bet.");
 	String bet;
 	do{
@@ -74,6 +77,7 @@ public class Driver {
 	System.out.println("Dealer: " + d1);
 	System.out.println("You: " + human);
 	System.out.println("Robot: " + robot);
+
     }
     
     /**
@@ -156,6 +160,7 @@ public class Driver {
 	System.out.println("Robot's turn\nThe current hands are: ");
 	printHands();
 	//Do AI code
+
     }
     
 }
