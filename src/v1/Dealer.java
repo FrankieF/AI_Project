@@ -103,8 +103,7 @@ public class Dealer extends Player {
 
 	    for (Player p : players) {
 
-		p.addCardToHand(deck.dealCard());
-	
+		p.addCardToHand(deck.dealCard());	
     }
     }
     

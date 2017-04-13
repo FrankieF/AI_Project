@@ -16,11 +16,7 @@ public class Player {
 	hand = new Hand(0);
 	chips = new Chips(500);
     }
-    
-    public void update() {
-	
-    }
-    
+   
     public Hand getHand(){
 	return hand;
     }

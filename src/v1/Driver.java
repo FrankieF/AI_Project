@@ -40,8 +40,7 @@ public class Driver {
 	deal();
 	checkForBlackJack();
 	humanTurn();
-	robotTurn();	
-	
+	robotTurn();		
     }
     
     /**
