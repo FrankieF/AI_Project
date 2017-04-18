@@ -132,11 +132,13 @@ public double getChanceOfWinning(int scoreNeeded) {
     
     public int highBet(int count) {
     int ammntToBet;
+
     	if(count >= 15)
     	{
     	ammntToBet = Dealer.getDealer().MIN_BET * 3;
     	}
     	else if(count >= 5)
+
     	{
     	    ammntToBet = Dealer.getDealer().MIN_BET * 2;
     	}
