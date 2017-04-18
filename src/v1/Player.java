@@ -37,10 +37,12 @@ public class Player {
 	hand.addCard(card);
     }
     
+
     public int getPlayerScore(){
 	return hand.getHandScore();
     }
     
+
     public Chips getChips(){
 	return chips;
     }
