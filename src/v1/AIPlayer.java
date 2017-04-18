@@ -131,6 +131,15 @@ public double getChanceOfWinning(int scoreNeeded) {
     }
     
     public int highBet(int count) {
-	return 0;
-    }
+    int ammntToBet;
+    	if(count >= 5)
+    	{
+    	    ammntToBet = Dealer.getDealer().MIN_BET * 2;
+    	}
+    	else
+    	{
+    	    ammntToBet = Dealer.getDealer().MIN_BET;
+    	}
+    return ammntToBet;
+   }
 }
