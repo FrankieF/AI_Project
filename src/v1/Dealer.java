@@ -41,8 +41,10 @@ public class Dealer extends Player {
     public Dealer() {
 	super();
 
+
 	deck = Deck.getDeck();
-	deck.shuffle();
+	deck.shuffle();      
+	gameNumber = 0;	
 	players = new ArrayList<Player>();
    
     }
@@ -78,6 +80,11 @@ public class Dealer extends Player {
     public void toWinString() {
 	for (Card c : hand.getHand())
 	    c.setHidden(false);
+    }
+    
+    @Override
+    public String toString(){
+	return getHand() + "";
     }
     
     
