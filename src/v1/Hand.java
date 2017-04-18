@@ -42,6 +42,15 @@ public class Hand {
   }
   
   /**
+   * Returns the faceup card of the dealer.
+   * @author Francis Fasola
+   * @return The value of the face up card.
+   */
+  public int getPlayerFaceupCard() {
+      return this.hand.get(1).getValue();
+  }
+  
+  /**
    * returns number of cards in hand
    * @return
    */
