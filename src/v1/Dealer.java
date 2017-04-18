@@ -19,15 +19,10 @@ public class Dealer extends Player {
     }
     
     private List<Player> players;
-    private Player player;
-    private AIPlayer ai;
     private Deck deck;
     private int score, gameNumber;
     private final int SHUFFLE_DECK = 3;
     public final int MIN_BET = 50;
-   
-    
-   
     
     
     public Deck getDeck() {
@@ -35,7 +30,7 @@ public class Dealer extends Player {
     }
     public void setDeck(Deck deck) {
         this.deck = deck;
-    }    
+    }    	
     public int getScore() {
         return score;
     }
@@ -50,41 +45,44 @@ public class Dealer extends Player {
      */
     public Dealer() {
 	super();
-	deck = Deck.getDeck();
-	deck.shuffle();
-      
-	gameNumber = 0;
-	ai = new AIPlayer();
-	player = new Player();
+
+	deck = deck.getDeck();
+	deck.shuffle();      
+	gameNumber = 0;	
 	players = new ArrayList<Player>();
-	players.add(player);
-	players.add(ai);
-	players.add(this);
-      
+   
     }
- 
     
-    
-    public void update() {
-	dealHand();
-	tryHit();
-	resetGame();		
 
 
+    public List<Player> getPlayers(){
+	return players;
+
+
+    }
+    
+    public void addPlayer(Player player){
+	this.players.add(player);
     }
     
     
     public void tryHit() {
-	if (score < 17)
+	while(score < 17) {
 	    hit();
+	}
     }
     
     private void hit() {
-	this.hand.addCard(deck.dealCard());
+	addCardToHand(deck.dealCard());
     }
     
     private void resetGame() {
 	deck.shuffle();
+    }
+    
+    @Override
+    public String toString(){
+	return getHand() + "";
     }
     
     
@@ -109,15 +107,20 @@ public class Dealer extends Player {
 
 	    for (Player p : players) {
 
-		p.addCardToHand(deck.dealCard());
-	
+		p.addCardToHand(deck.dealCard());	
     }
+    }
+    
+    /**
+     * Hits a player in game
+     * @param player
+     */
+    public void hitPlayer(Player player){
+	player.addCardToHand(deck.dealCard());
     }
     
     public static void main (String args []){
 	Dealer d1 = new Dealer();
-	Card c = new NumericCard(11, Suite.DIAMONDS);
-	d1.addCardToHand(c);
 	System.out.println(d1);
     }
     

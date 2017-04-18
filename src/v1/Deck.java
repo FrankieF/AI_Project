@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * Represnts a standard deck of 52 playing cards for a game of blackjack.
  * 
- * @author Frankie Fasola, Mike Ginn
+ * @author Frankie Fasola, Michael Ginn
  * @version 3/2/17
  *
  */
@@ -35,7 +35,8 @@ public class Deck {
 	createSuit(Suite.DIAMONDS);
 	createSuit(Suite.HEARTS);
 	createSuit(Suite.CLUBS);
-	createSuit(Suite.SPADES);
+	createSuit(Suite.SPADES); 
+
     }
     
     public List<Card> getUsedCards() {
@@ -65,10 +66,10 @@ public class Deck {
     
     public void shuffle() {
 	List<Card> deck = new ArrayList<Card>();
-	int max = deck.size();
+	int max = readyCards.size();
 	while (max > 0) {
 	    Random r = new Random();
-	    int offset = r.nextInt(NUMBER_OF_CARDS);
+	    int offset = r.nextInt(max);
 	    deck.add(readyCards.get(offset));
 	    readyCards.remove(offset);
 	    max--;
@@ -97,10 +98,15 @@ public class Deck {
      * @return The card on top of the deck.
      */
     public Card dealCard() {
-	int top = readyCards.size();
+	int top = readyCards.size() - 1;
 	Card c = readyCards.remove(top);
 	usedCards.add(c);
 	return c;
+    }
+    
+    public static void main (String args []){
+	Deck d1 = new Deck();
+	System.out.println(d1.readyCards.size());
     }
 
 }
