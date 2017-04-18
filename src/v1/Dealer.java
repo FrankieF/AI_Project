@@ -67,12 +67,13 @@ public class Dealer extends Player {
     
     
     public void tryHit() {
-	if (score < 17)
+	while(score < 17) {
 	    hit();
+	}
     }
     
     private void hit() {
-	this.hand.addCard(deck.dealCard());
+	addCardToHand(deck.dealCard());
     }
     
     private void resetGame() {

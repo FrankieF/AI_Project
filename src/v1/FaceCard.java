@@ -22,5 +22,9 @@ public class FaceCard extends Card {
     public void setFaceValue(String s) {
 	this.faceValue = s;
     }
+    
+    public String toString(){
+	return faceValue + "of" + getSuite();
+    }
 
 }

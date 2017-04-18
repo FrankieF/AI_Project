@@ -28,6 +28,12 @@ public class Driver {
     }
     
     private static void startRound(){
+	System.out.println("To start another round type 1.");
+	String response;
+	do{
+	response = scnr.next();
+	}
+	while(!response.equals("1"));
 	d1 = new Dealer();
 	human = new Player();
 	robot = new AIPlayer();	
@@ -40,7 +46,9 @@ public class Driver {
 	deal();
 	checkForBlackJack();
 	humanTurn();
-	robotTurn();		
+
+	robotTurn();	
+	dealerTurn();
 
     }
     
@@ -85,48 +93,39 @@ public class Driver {
      */
     private static void checkForBlackJack(){
 	
-	boolean dealerBlackJack = false;
+	
 	//Check for dealer blackjack
 	if(d1.hasBlackjack()){
 	    System.out.println("Dealer has blackjack.");
-	    dealerBlackJack = true;
-	}
-	
-	//Check for player blackjack
-	//Check for push
-	if(human.hasBlackjack() && dealerBlackJack == true){
-	    human.getChips().addAmount(human.getHandBet());
-	    System.out.println("You have blackjack!");
-	    System.out.println("You push this round. No money awarded.");
-	}
-	//Check for win
-	else if(human.hasBlackjack() && dealerBlackJack == false){
-	    System.out.println("You have blackjack!");
-	    System.out.println("You won the hand! You won $" + human.getHandBet());
-	    human.getChips().addAmount(human.getHandBet());
+	    
+	    if(!human.hasBlackjack() && !robot.hasBlackjack()){
+		System.out.println("Dealer wins the hand. You lost $"
+			+ human.getHandBet());
+		System.out.println("Robot lost $" + robot.getHandBet());
+		human.wonHand();
+		robot.wonHand();
 	    }
-	//Check for loss
-	else if(dealerBlackJack == true){
-	    System.out.println("You lost this hand. You lost $" + human.getHandBet());
-	    human.getChips().removeAmount(human.getHandBet());
-	}
-	//Check robots opening hand
-	//Check for push
-	if(robot.hasBlackjack() && dealerBlackJack == true){
-	   System.out.println("Robot has blackjack.");
-	   System.out.println("Robot pushes this hand. No money awarded.");
-	}
-	//Check for win
-	else if(robot.hasBlackjack() && dealerBlackJack == false){
-	    robot.getChips().addAmount(robot.getHandBet());
-	    System.out.println("Robot has blackjack.");
-	    System.out.println("Robot won the hand. Robot won $" + robot.getHandBet());
+	    else if(human.hasBlackjack()){
+		System.out.println("You have blackjack!");
+		System.out.println("You push this round. No money awarded.");
 	    }
-	//Check for loss
-	else if(dealerBlackJack == true){
-	    System.out.println("Robot lost this hand. Robot lost $" + robot.getHandBet());
-	    robot.getChips().removeAmount(robot.getHandBet());
-	}	
+	    else if(robot.hasBlackjack()){
+		System.out.println("Robot has blackjack.");
+		System.out.println("Robot pushed this round. No money awarded.");
+	    }
+	    startRound();
+	}
+	else if(!d1.hasBlackjack()){
+	    if(human.hasBlackjack() && robot.hasBlackjack()){
+		System.out.println("You and robot have blackjack!");
+		System.out.println("You both win the hand. You are awarded $" +
+		human.getHandBet());
+		System.out.println("Robot is awarded $" + robot.getHandBet());
+		human.wonHand();
+		robot.wonHand();
+		startRound();
+	    }
+	}
 	
     }
     
@@ -162,5 +161,20 @@ public class Driver {
 	//Do AI code
 
     }
+    
+    private static void dealerTurn(){
+	System.out.println("Dealer's turn\nThe current hands are: ");
+	printHands();
+	if(robot.hasBust() && human.hasBust()){
+	    System.out.println("Both players bust. Dealer wins.");
+	}
+	
+	else{	
+	d1.tryHit();
+	printHands();
+	}
+    }
+    
+
     
 }

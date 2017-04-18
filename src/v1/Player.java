@@ -57,6 +57,10 @@ public class Player {
 	return hand.isBlackJack();
     }
     
+    public boolean hasBust(){
+	return hand.isBust();
+    }
+    
     public String toString(){
 	return hand + " $" + hand.getBet();
     }
