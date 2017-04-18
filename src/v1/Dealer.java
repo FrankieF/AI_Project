@@ -20,8 +20,6 @@ public class Dealer extends Player {
     
     private List<Player> players;
     private Deck deck;
-    private int score, gameNumber;
-    private final int SHUFFLE_DECK = 3;
     public final int MIN_BET = 50;
     
     
@@ -32,10 +30,7 @@ public class Dealer extends Player {
         this.deck = deck;
     }    	
     public int getScore() {
-        return score;
-    }
-    public void setScore(int score) {
-        this.score = score;
+        return this.hand.getHandScore();
     }
     
     /***
@@ -46,14 +41,11 @@ public class Dealer extends Player {
     public Dealer() {
 	super();
 
-	deck = deck.getDeck();
-  deck.shuffle();      
-	gameNumber = 0;	
+	deck = Deck.getDeck();
+	deck.shuffle();
 	players = new ArrayList<Player>();
-	
-
+   
     }
- 
     
 
 
@@ -69,16 +61,23 @@ public class Dealer extends Player {
     
     
     public void tryHit() {
-	if (score < 17)
+	while(hand.getHandScore() < 17) {
 	    hit();
+	}
     }
     
     private void hit() {
-	this.hand.addCard(deck.dealCard());
+	addCardToHand(deck.dealCard());
     }
     
-    private void resetGame() {
-	deck.shuffle();
+    @Override
+    public String toString(){
+	return getHand() + "";
+    }
+    
+    public void toWinString() {
+	for (Card c : hand.getHand())
+	    c.setHidden(false);
     }
     
     
@@ -103,9 +102,16 @@ public class Dealer extends Player {
 
 	    for (Player p : players) {
 
-		p.addCardToHand(deck.dealCard());
-	
+		p.addCardToHand(deck.dealCard());	
     }
+    }
+    
+    /**
+     * Hits a player in game
+     * @param player
+     */
+    public void hitPlayer(Player player){
+	player.addCardToHand(deck.dealCard());
     }
     
     public static void main (String args []){

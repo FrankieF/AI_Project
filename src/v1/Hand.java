@@ -41,6 +41,10 @@ public class Hand {
       }
   }
   
+  public ArrayList<Card> getHand() {
+      return this.hand;
+  }
+  
   /**
    * Returns the faceup card of the dealer.
    * @author Francis Fasola

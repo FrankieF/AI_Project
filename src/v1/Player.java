@@ -16,11 +16,7 @@ public class Player {
 	hand = new Hand(0);
 	chips = new Chips(500);
     }
-    
-    public void update() {
-	
-    }
-    
+   
     public Hand getHand(){
 	return hand;
     }
@@ -57,7 +53,15 @@ public class Player {
 	this.chips.addAmount(hand.getBet());
     }
     
+    public boolean hasBlackjack(){
+	return hand.isBlackJack();
+    }
+    
+    public boolean hasBust(){
+	return hand.isBust();
+    }
+    
     public String toString(){
-	return hand + " $" + hand.getBet();
+	return hand + ": " + hand.getHandScore() + " $" + hand.getBet();
     }
 }
