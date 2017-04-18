@@ -11,11 +11,13 @@ public class AIPlayer extends Player {
 
     public final int HIGH_CARD_VALUE = 6;
     public double HIT_PROBABILITY = 0;
-    public static final double HIT_AGGRESSIVE = 0;
-    public static final double HIT_CONSERVATIVE = 0;
+    public static final double HIT_AGGRESSIVE = .40;
+    public static final double HIT_CONSERVATIVE = .70;
+    private Dealer dealer;
     
-    public AIPlayer(boolean isAggressive) {
-	HIT_PROBABILITY = isAggressive ? .40 : .70;
+    public AIPlayer(boolean isAggressive, Dealer dealer) {
+	HIT_PROBABILITY = !isAggressive ? HIT_CONSERVATIVE : HIT_AGGRESSIVE;
+	this.dealer = dealer;
     }
     
     public int getBet() {
@@ -65,11 +67,11 @@ public class AIPlayer extends Player {
     }
     
     public boolean isLessThanDealerFaceCard() {
-	return this.getHand().getHandScore() - 10 <= Dealer.getDealer().getHand().getPlayerFaceupCard();
+	return this.getHand().getHandScore() - 10 <= dealer.getHand().getPlayerFaceupCard();
     }
     
     public double changeConfidance(double chance) {
-	int dealerScore = Dealer.getDealer().getHand().getPlayerFaceupCard();
+	int dealerScore = dealer.getHand().getPlayerFaceupCard();
 	double _chance = chance;
 	if (isLessThanDealerFaceCard()) 
 	    _chance = dealerScore > HIGH_CARD_VALUE ? _chance * 1.05 : _chance;
@@ -138,7 +140,6 @@ public double getChanceOfWinning(int scoreNeeded) {
     	ammntToBet = Dealer.getDealer().MIN_BET * 3;
     	}
     	else if(count >= 5)
-
     	{
     	    ammntToBet = Dealer.getDealer().MIN_BET * 2;
     	}

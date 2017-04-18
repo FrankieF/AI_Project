@@ -15,44 +15,37 @@ public class Driver {
     private static Player human;
     private static AIPlayer robot;    
     private static Scanner scnr = new Scanner(System.in);
+    private static int round = 0;
+    private static final int SHUFFLE_DECK = 3;
 
     public static void main(String[] args) {
-	System.out.println("Welcome to BlackJack! To start playing type 1.");
-	String response;
-	do{
-	 response = scnr.next();
-	}
-	while(!response.equals("1"));
+      
+	getInput("Welcome to BlackJack! To start playing type 1.", "1");
+	boolean aggressive = getInput2("If you want to play a aggressive player type 1, otherwise type 2.", "1","2");
+	d1 = new Dealer();
+	human = new Player();
+	robot = new AIPlayer(aggressive, d1);	
+
+	d1.addPlayer(human);
+	d1.addPlayer(robot);
+	d1.addPlayer(d1);
 	startRound();
 	
     }
     
     private static void startRound(){
-	System.out.println("To start another round type 1.");
-	String response;
-	do{
-	response = scnr.next();
-	}
-	while(!response.equals("1"));
-	d1 = new Dealer();
-	human = new Player();
-	robot = new AIPlayer();	
-
-	d1.addPlayer(human);
-	d1.addPlayer(robot);
-	d1.addPlayer(d1);
-
+	if (shouldShuffle())
+	    Deck.getDeck().shuffle();
+	round++;
+	getInput("To start another round type 1.","1");
 	getBets();
 	deal();
 	checkForBlackJack();
 	humanTurn();
-
 	robotTurn();	
 	dealerTurn();
-
+	d1.toWinString();
 	checkWinners();
-
-
     }
     
     /**
@@ -167,15 +160,9 @@ public class Driver {
     private static void robotTurn(){
 	System.out.println("Robot's turn\nThe current hands are: ");
 	printHands();
-	//Do AI code
-
-    }
-    
-
-	
-	//AI gets bet
+   //AI gets bet
 	robot.setHandBet(robot.getBet());
-	
+	robot.turn();	
     }
     
     private static void deal(){
@@ -266,7 +253,6 @@ public class Driver {
 
     }
     
-
     private static void dealerTurn(){
 	System.out.println("Dealer's turn\nThe current hands are: ");
 	printHands();
@@ -279,6 +265,35 @@ public class Driver {
 	printHands();
 	}
     }
+    
+    /**
+     * Checks the current round number to see if the deck should be shuffled.
+     * @author Francis Fasola
+     * @return true if the deck should be shuffled.
+     */
+    public static boolean shouldShuffle() {
+	return round > SHUFFLE_DECK;
+    }
+    
+    public static void getInput(String message, String input) {
+	System.out.println(message);
+	String response;
+	do{
+	 response = scnr.next();
+	}
+	while(!response.equals(input));
+    }
+    
+    public static boolean getInput2(String message, String input, String input2) {
+	System.out.println(message);
+	String response;
+	do{
+	 response = scnr.next();
+	}
+	while(!response.equals(input) && !response.equals(input2));
+	return response.equals("1") ? true : false;
+    }
+
 
     private static void checkWinners(){
 	
@@ -332,7 +347,5 @@ public class Driver {
 	
 	
     }
-
-
     
 }
