@@ -54,7 +54,9 @@ public class AIPlayer extends Player {
         	double chance = getChanceOfWinning(scoreNeeded);
         	double confidance = changeConfidance(chance);
         	int count = count();
-        	double prob = (double)(chance * confidance * count);
+        	double prob = chance * confidance;
+        	if (count != 0)
+        	    prob *= Math.abs(count);
         	if (prob > HIT_PROBABILITY) {
         	    this.addCardToHand(Dealer.getDealer().getDeck().dealCard());
         	} 
@@ -62,6 +64,7 @@ public class AIPlayer extends Player {
         	    stay = true;
         	if (this.getHand().isBust())
         	    stay = true;
+        	Driver.getInput("AI turn complete, new AI hand: " + this.toString() + "\nPress 1 to continue", "1");
 	}
 	
     }
@@ -72,11 +75,13 @@ public class AIPlayer extends Player {
     
     public double changeConfidance(double chance) {
 	int dealerScore = dealer.getHand().getPlayerFaceupCard();
-	double _chance = chance;
+	if (dealerScore == 11)
+	    return 1.5;
+	double _chance = 1;
 	if (isLessThanDealerFaceCard()) 
-	    _chance = dealerScore > HIGH_CARD_VALUE ? _chance * 1.05 : _chance;
+	    _chance = dealerScore > HIGH_CARD_VALUE ? 1.25 : _chance;
         else if (this.getHand().getHandScore() > 17) {
-            _chance *= .90;
+            _chance = .90;
         }
 	return _chance;
 	
@@ -101,35 +106,49 @@ public double getChanceOfWinning(int scoreNeeded) {
 	    switch(Deck.getDeck().getUsedCards().get(i).getValue()) {
 	    case 2:
 		cards[2]++;
+		break;
 	    case 3:
 		cards[3]++;
+		break;
 	    case 4:
 		cards[4]++;
+		break;
 	    case 5:
 		cards[5]++;
+		break;
 	    case 6:
 		cards[6]++;
+		break;
 	    case 7:
 		cards[7]++;
+		break;
 	    case 8:
 		cards[8]++;
+		break;
 	    case 9:
 		cards[9]++;
+		break;
 	    case 10:
 		cards[10]++;
+		break;
 	    case 11:
 		cards[11]++;
+		break;
 	    }
 	}
 	
-	int suitableCards = scoreNeeded * 4;
+	double suitableCards = scoreNeeded * 4;
 	int usedCards = 0;
 	for (int i = 2; i <= scoreNeeded; i++) {
 	    usedCards += cards[i];
 	}
 	
 	suitableCards -= usedCards;
-	return suitableCards / Deck.getDeck().getReadyCards().size();
+	double size = Deck.getDeck().getReadyCards().size();
+	System.out.println(suitableCards);
+	System.out.println(size);
+	System.out.println((double)(suitableCards/Deck.getDeck().getReadyCards().size()));
+	return suitableCards / size;
     }
     
     public int highBet(int count) {
