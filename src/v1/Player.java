@@ -68,6 +68,6 @@ public class Player {
     }
     
     public String toString(){
-	return hand + ": " + hand.getHandScore() + " $" + hand.getBet();
+	return hand + ": " + hand.getHandScore() + " current bet: $" + hand.getBet() + " Chip Total: " + this.chips.getAmount();
     }
 }

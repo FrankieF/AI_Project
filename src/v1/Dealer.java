@@ -20,7 +20,7 @@ public class Dealer extends Player {
     
     private List<Player> players;
     private Deck deck;
-    public final int MIN_BET = 50;
+    public final int MIN_BET = 10;
     
     
     public Deck getDeck() {

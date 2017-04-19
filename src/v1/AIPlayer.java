@@ -64,6 +64,10 @@ public class AIPlayer extends Player {
         	    stay = true;
         	if (this.getHand().isBust())
         	    stay = true;
+        	else if (this.getHand().isBlackJack()) {
+        	    stay = true;
+        	    Driver.getInput("\nThe robot got black jack! :0\nPress 1 to continue.", "1");
+        	}
         	Driver.getInput("AI turn complete, new AI hand: " + this.toString() + "\nPress 1 to continue", "1");
 	}
 	
@@ -152,20 +156,13 @@ public double getChanceOfWinning(int scoreNeeded) {
     }
     
     public int highBet(int count) {
-    int ammntToBet;
-
-    	if(count >= 15)
-    	{
-    	ammntToBet = Dealer.getDealer().MIN_BET * 3;
-    	}
-    	else if(count >= 5)
-    	{
+	int ammntToBet = Dealer.getDealer().MIN_BET;;
+    	if(count >= 6)
+    	    ammntToBet = Dealer.getDealer().MIN_BET * 4;
+    	else if(count >= 3)
+    	    ammntToBet = Dealer.getDealer().MIN_BET * 3;
+    	else if (count >= 2)
     	    ammntToBet = Dealer.getDealer().MIN_BET * 2;
-    	}
-    	else
-    	{
-    	    ammntToBet = Dealer.getDealer().MIN_BET;
-    	}
-    return ammntToBet;
+    	return ammntToBet;
    }
 }

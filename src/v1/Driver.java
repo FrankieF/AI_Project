@@ -56,7 +56,7 @@ public class Driver {
 
 	//player gets bet
 
-	System.out.println("Please enter bet.");
+	System.out.println("Please enter bet. You have " + human.getChips().getAmount() + " chips.");
 	String bet;
 	do{
 	    System.out.println("The minimum bet is 10.");
@@ -150,6 +150,10 @@ public class Driver {
 	    else if(response.equals("2") || human.hasBust()){
 		stay = true;
 	    }
+	    if (human.getHand().isBust()) {
+		stay = true;
+		getInput("\nYou busted! :(\nPress 1 to continue.", "1");
+	    }
 	}while(stay == false);
 	
     }
@@ -212,6 +216,8 @@ public class Driver {
     private static void checkWinners(){
 	
 	checkForBlackJack();
+	System.out.println("\nThe final hands for the round are:\n\t");
+	printHands();
 	
 	//check for busts
 	if(human.hasBust()){
