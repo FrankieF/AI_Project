@@ -22,11 +22,13 @@ public class Dealer extends Player {
     private Deck deck;
     public final int MIN_BET = 10;
 
+
     /**
      * gets the dealer's deck
      * 
      * @return
      */
+
     public Deck getDeck() {
 	return deck;
     }
@@ -37,6 +39,7 @@ public class Dealer extends Player {
      * @param deck
      */
     public void setDeck(Deck deck) {
+
 	this.deck = deck;
     }
 
@@ -47,6 +50,7 @@ public class Dealer extends Player {
      */
     public int getScore() {
 	return this.hand.getHandScore();
+
     }
 
     /***
@@ -57,11 +61,13 @@ public class Dealer extends Player {
     public Dealer() {
 	super();
 
+
 	deck = Deck.getDeck();
 	deck.shuffle();
 	players = new ArrayList<Player>();
 
     }
+
 
     /**
      * gets the players in the game
@@ -71,6 +77,7 @@ public class Dealer extends Player {
 	return players;
 
     }
+
     /**
      * adds players to the game
      * @param player
@@ -91,6 +98,7 @@ public class Dealer extends Player {
      */
     public void tryHit() {
 	while (hand.getHandScore() < 17) {
+
 	    hit();
 	}
     }
@@ -100,6 +108,7 @@ public class Dealer extends Player {
     private void hit() {
 	addCardToHand(deck.dealCard());
     }
+
     /**
      * returns a string of the dealer's hand
      */
@@ -111,6 +120,7 @@ public class Dealer extends Player {
      * changes the hidden card in dealer's hand
      * to not hidden
      */
+
     public void toWinString() {
 	for (Card c : hand.getHand())
 	    c.setHidden(false);
@@ -141,6 +151,7 @@ public class Dealer extends Player {
 
 	    for (Player p : players) {
 
+
 		p.addCardToHand(deck.dealCard());
 	    }
     }
@@ -152,6 +163,7 @@ public class Dealer extends Player {
      */
     public void hitPlayer(Player player) {
 	player.addCardToHand(deck.dealCard());
+
     }
 
 }

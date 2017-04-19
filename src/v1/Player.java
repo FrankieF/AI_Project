@@ -21,12 +21,14 @@ public class Player {
 	chips = new Chips(500);
     }
    
+
     /**
      * gets the player's hand
      * @return
      */
     public Hand getHand(){
 	return hand;
+
     }
     /**
      * sets the player's hand
@@ -57,14 +59,17 @@ public class Player {
 	hand.addCard(card);
     }
     
+
     /**
      * gets the player's current score of hand
      * @return
      */
+
     public int getPlayerScore(){
 	return hand.getHandScore();
     }
     
+
     /**
      * gets the player's chips
      * @return
@@ -118,5 +123,6 @@ public class Player {
      */
     public String toString(){
 	return hand + ":" + hand.getHandScore() + " current bet:$" + hand.getBet() + " Chip Total:" + this.chips.getAmount();
+
     }
 }

@@ -7,7 +7,9 @@ import java.util.Scanner;
 
 /**
  * @author Frankie Fasola Michael Ginn
+
  * Driver class simulates the blackjack game between the user, AIplayer, and dealer
+
  */
 public class Driver {
     
@@ -32,6 +34,7 @@ public class Driver {
 	startRound();
 	
     }
+
    
     
     /**
@@ -52,15 +55,18 @@ public class Driver {
 	    round = 0;
 	    System.out.println("New dealer has entered the game.\n");
 	}
+
 	round++;
 	getInput("To start another round type 1.","1");
 	getBets();
 	deal();
 	checkForBlackJack();
 	humanTurn();
+
 	if(!robot.getChips().noChips()){
 	robotTurn();	
 	}
+
 	dealerTurn();
 	d1.toWinString();
 	checkWinners();
@@ -70,6 +76,7 @@ public class Driver {
      * getBets - gets the bets of the player and the AI
      */
     private static void getBets(){
+
 	//player makes bet
 	//must be atleast 10$ and at most the amount of chips they have
 	System.out.println("Please enter bet.");
@@ -87,15 +94,18 @@ public class Driver {
 	    System.out.println("Invalid bet amount");
 	    human.setHandBet(10);
 	}
+
 	
 	//AI gets bet
 	robot.setHandBet(robot.getBet());
 	
     }
     
+
     /**
      * deals cards to all players
      */
+
     private static void deal(){
 	d1.dealHand();
 	System.out.println("Starting hands are: ");
@@ -103,6 +113,7 @@ public class Driver {
 	System.out.println("\n");
     }
     
+
     /**
      * prints all hands in game
      */
@@ -113,6 +124,7 @@ public class Driver {
 	System.out.println("Robot: " + robot);
 	}
 
+
     }
     
     /**
@@ -120,6 +132,7 @@ public class Driver {
      */
     private static void checkForBlackJack(){
 	
+
 	
 	//Check for dealer blackjack
 	if(d1.hasBlackjack()){
@@ -204,6 +217,7 @@ public class Driver {
 	printHands();
 	if(robot.hasBust() && human.hasBust()){
 	    System.out.println("Both players bust. Dealer wins.");
+
 	}
 	
 	else{	
@@ -220,6 +234,7 @@ public class Driver {
 	return round == SHUFFLE_DECK;
     }
     
+
     /**
      * gets input to play again
      * @param message
@@ -305,10 +320,12 @@ public class Driver {
 	
 	
 	
+
 	
     }
     
     /**
+
      * checks that players have chips remaining to bet
      */
     private static void checkChips(){
@@ -320,6 +337,7 @@ public class Driver {
 	    System.out.println("Robot ran out of chips. Robot has left the game.");
 	    d1.removePlayer(robot);
 	}
+
     }
     
 }

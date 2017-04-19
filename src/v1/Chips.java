@@ -54,6 +54,14 @@ public class Chips {
 	}
     }
     
+    public void removeAmount(int lostAmount){
+	this.amount -= lostAmount;
+    }
+    
+    public void addAmount(int wonAmount){
+	this.amount += wonAmount;
+    }
+    
     /**
      * removes amount from chips
      * @param lostAmount

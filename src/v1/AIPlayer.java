@@ -20,10 +20,12 @@ public class AIPlayer extends Player {
 	this.dealer = dealer;
     }
 
+
     /**
      * gets the bet for the AI player
      * @return
      */
+
     public int getBet() {
 	int count = count();
 	if (count > 0)
@@ -49,6 +51,50 @@ public class AIPlayer extends Player {
 	    }
 	}
 	return count;
+    }
+    
+    public void turn() {
+	boolean stay = false;
+	while (!stay) {
+        	int scoreNeeded = this.getHand().getScoreNeeded();
+        	double chance = getChanceOfWinning(scoreNeeded);
+        	double confidance = changeConfidance(chance);
+        	int count = count();
+        	double prob = chance * confidance;
+        	if (count != 0)
+        	    prob *= Math.abs(count);
+        	if (prob > HIT_PROBABILITY) {
+        	    this.addCardToHand(Dealer.getDealer().getDeck().dealCard());
+        	} 
+        	else 
+        	    stay = true;
+        	if (this.getHand().isBust())
+        	    stay = true;
+        	else if (this.getHand().isBlackJack()) {
+        	    stay = true;
+        	    Driver.getInput("\nThe robot got black jack! :0\nPress 1 to continue.", "1");
+        	}
+        	Driver.getInput("AI turn complete, new AI hand: " + this.toString() + "\nPress 1 to continue", "1");
+	}
+	
+    }
+    
+    public boolean isLessThanDealerFaceCard() {
+	return this.getHand().getHandScore() - 10 <= dealer.getHand().getPlayerFaceupCard();
+    }
+    
+    public double changeConfidance(double chance) {
+	int dealerScore = dealer.getHand().getPlayerFaceupCard();
+	if (dealerScore == 11)
+	    return 1.5;
+	double _chance = 1;
+	if (isLessThanDealerFaceCard()) 
+	    _chance = dealerScore > HIGH_CARD_VALUE ? 1.25 : _chance;
+        else if (this.getHand().getHandScore() > 17) {
+            _chance = .90;
+        }
+	return _chance;
+	
     }
 
     public boolean isLessThanDealerFaceCard() {
@@ -114,24 +160,34 @@ public double getChanceOfWinning(int scoreNeeded) {
 	    switch(Deck.getDeck().getUsedCards().get(i).getValue()) {
 	    case 2:
 		cards[2]++;
+		break;
 	    case 3:
 		cards[3]++;
+		break;
 	    case 4:
 		cards[4]++;
+		break;
 	    case 5:
 		cards[5]++;
+		break;
 	    case 6:
 		cards[6]++;
+		break;
 	    case 7:
 		cards[7]++;
+		break;
 	    case 8:
 		cards[8]++;
+		break;
 	    case 9:
 		cards[9]++;
+		break;
 	    case 10:
 		cards[10]++;
+		break;
 	    case 11:
 		cards[11]++;
+		break;
 	    }
 	}
 	double suitableCards = scoreNeeded * 4;
@@ -142,6 +198,7 @@ public double getChanceOfWinning(int scoreNeeded) {
 	
 	suitableCards -= usedCards;
 	double size = Deck.getDeck().getReadyCards().size();
+
 	return suitableCards / size;
     }
 
