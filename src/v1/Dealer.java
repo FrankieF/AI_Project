@@ -11,28 +11,48 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Dealer extends Player {
-    
 
     private static Dealer dealer = null;
+
     public static Dealer getDealer() {
 	return dealer == null ? new Dealer() : dealer;
     }
-    
+
     private List<Player> players;
     private Deck deck;
     public final int MIN_BET = 10;
-    
-    
+
+
+    /**
+     * gets the dealer's deck
+     * 
+     * @return
+     */
+
     public Deck getDeck() {
-        return deck;
+	return deck;
     }
+
+    /**
+     * sets the dealer's deck
+     * 
+     * @param deck
+     */
     public void setDeck(Deck deck) {
-        this.deck = deck;
-    }    	
-    public int getScore() {
-        return this.hand.getHandScore();
+
+	this.deck = deck;
     }
-    
+
+    /**
+     * gets the dealer's hand score
+     * 
+     * @return
+     */
+    public int getScore() {
+	return this.hand.getHandScore();
+
+    }
+
     /***
      * Creates a new dealer initialized with a deck of cards.
      * 
@@ -43,59 +63,87 @@ public class Dealer extends Player {
 
 
 	deck = Deck.getDeck();
-	deck.shuffle();    
+	deck.shuffle();
 	players = new ArrayList<Player>();
-   
+
     }
-    
 
 
-    public List<Player> getPlayers(){
+    /**
+     * gets the players in the game
+     * @return
+     */
+    public List<Player> getPlayers() {
 	return players;
 
-
     }
-    
-    public void addPlayer(Player player){
+
+    /**
+     * adds players to the game
+     * @param player
+     */
+    public void addPlayer(Player player) {
 	this.players.add(player);
     }
-    
-    
+    /**
+     * removes players from the game
+     * @param player
+     */
+    public void removePlayer(Player player) {
+	this.players.remove(player);
+    }
+    /**
+     * dealer hits if his score is less than 17
+     * This is how blackjack is played.
+     */
     public void tryHit() {
-	while(hand.getHandScore() < 17) {
+	while (hand.getHandScore() < 17) {
+
 	    hit();
 	}
     }
-    
+    /**
+     * adds a card to the dealers hand and deals card
+     */
     private void hit() {
 	addCardToHand(deck.dealCard());
     }
-    
+
+    /**
+     * returns a string of the dealer's hand
+     */
     @Override
-    public String toString(){
+    public String toString() {
 	return getHand() + "";
     }
-    
+    /**
+     * changes the hidden card in dealer's hand
+     * to not hidden
+     */
+
     public void toWinString() {
 	for (Card c : hand.getHand())
 	    c.setHidden(false);
     }
     
-    
+    /**
+     * adds card to dealer's hand
+     * first card is always face down
+     */
     @Override
-    public void addCardToHand(Card card){
-	//dealer's first card is face down
-	if(hand.isEmpty()){
+    public void addCardToHand(Card card) {
+	// dealer's first card is face down
+	if (hand.isEmpty()) {
 	    card.setHidden(true);
 	    hand.addCard(card);
-	}
-	else{
+	} else {
 	    hand.addCard(card);
 	}
     }
-    
+
     /***
      * Deals two cards to each player to start the round.
+     * 
      * @author Francis Fasola
      */
     public void dealHand() {
@@ -103,25 +151,19 @@ public class Dealer extends Player {
 
 	    for (Player p : players) {
 
-		p.addCardToHand(deck.dealCard());	
+
+		p.addCardToHand(deck.dealCard());
+	    }
     }
-    }
-    
+
     /**
      * Hits a player in game
+     * 
      * @param player
      */
-    public void hitPlayer(Player player){
+    public void hitPlayer(Player player) {
 	player.addCardToHand(deck.dealCard());
+
     }
-    
-    public static void main (String args []){
-	Dealer d1 = new Dealer();
-	System.out.println(d1);
-    }
-    
-    
-    
-    
-    
+
 }

@@ -143,6 +143,18 @@ public class Hand {
       return handScore == BLACKJACK_VALUE;
   }
   
+
+  /**
+   * clears hand and resets score and size
+   */
+  public void clear(){
+      this.hand.clear();
+      this.handScore = 0;
+      this.handSize = 0;
+      this.scoreNeeded = 21;
+  }
+  
+
   /**
    * displays cards in hand
    */

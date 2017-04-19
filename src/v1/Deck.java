@@ -39,9 +39,25 @@ public class Deck {
 
     }
     
+    /**
+     * returns a new deck
+     * @return
+     */
+    public Deck getNewDeck(){
+	return new Deck();
+	
+    }
+    /**
+     * gets used cards
+     * @return
+     */
     public List<Card> getUsedCards() {
         return usedCards;
     }
+    /**
+     * gets available cards in deck
+     * @return
+     */
     public List<Card> getReadyCards() {
         return readyCards;
     }
@@ -64,6 +80,9 @@ public class Deck {
 	}
     }
     
+    /**
+     * shuffles deck
+     */
     public void shuffle() {
 	List<Card> deck = new ArrayList<Card>();
 	int max = readyCards.size();
@@ -103,10 +122,6 @@ public class Deck {
 	usedCards.add(c);
 	return c;
     }
-    
-    public static void main (String args []){
-	Deck d1 = new Deck();
-	System.out.println(d1.readyCards.size());
-    }
 
-}
+  }
+

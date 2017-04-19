@@ -7,7 +7,9 @@ import java.util.Scanner;
 
 /**
  * @author Frankie Fasola Michael Ginn
- *
+
+ * Driver class simulates the blackjack game between the user, AIplayer, and dealer
+
  */
 public class Driver {
     
@@ -32,17 +34,39 @@ public class Driver {
 	startRound();
 	
     }
+
+   
     
+    /**
+     * starts a new round of blackjack
+     */
     private static void startRound(){
-	if (shouldShuffle())
-	    Deck.getDeck().shuffle();
+	//checks that players have chips left
+	checkChips();
+	//clears all old hands
+	human.clearHand();
+	robot.clearHand();
+	d1.clearHand();
+	
+	//brings in a new shuffled deck
+	if (shouldShuffle()){
+	    d1.setDeck(d1.getDeck().getNewDeck());
+	    d1.getDeck().shuffle();
+	    round = 0;
+	    System.out.println("New dealer has entered the game.\n");
+	}
+
 	round++;
 	getInput("To start another round type 1.","1");
 	getBets();
 	deal();
 	checkForBlackJack();
 	humanTurn();
+
+	if(!robot.getChips().noChips()){
 	robotTurn();	
+	}
+
 	dealerTurn();
 	d1.toWinString();
 	checkWinners();
@@ -53,17 +77,23 @@ public class Driver {
      */
     private static void getBets(){
 
-
-	//player gets bet
-
-	System.out.println("Please enter bet. You have " + human.getChips().getAmount() + " chips.");
+	//player makes bet
+	//must be atleast 10$ and at most the amount of chips they have
+	System.out.println("Please enter bet.");
 	String bet;
+	try{
 	do{
 	    System.out.println("The minimum bet is 10.");
+	    System.out.println("You have " + human.getChips().getAmount() + " chips.");
 	    bet = scnr.next();
 	}
-	while(Integer.parseInt(bet) < 10);
+	while(Integer.parseInt(bet) < 10 || (!human.getChips().checkBet(Integer.parseInt(bet))));
 	human.setHandBet(Integer.parseInt(bet));
+	//catches invalid bet and sets bet at minimum bet
+	}catch(NumberFormatException e){
+	    System.out.println("Invalid bet amount");
+	    human.setHandBet(10);
+	}
 
 	
 	//AI gets bet
@@ -71,6 +101,11 @@ public class Driver {
 	
     }
     
+
+    /**
+     * deals cards to all players
+     */
+
     private static void deal(){
 	d1.dealHand();
 	System.out.println("Starting hands are: ");
@@ -78,10 +113,17 @@ public class Driver {
 	System.out.println("\n");
     }
     
+
+    /**
+     * prints all hands in game
+     */
     private static void printHands(){
 	System.out.println("Dealer: " + d1);
 	System.out.println("You: " + human);
+	if(!robot.getChips().noChips()){
 	System.out.println("Robot: " + robot);
+	}
+
 
     }
     
@@ -90,6 +132,7 @@ public class Driver {
      */
     private static void checkForBlackJack(){
 	
+
 	
 	//Check for dealer blackjack
 	if(d1.hasBlackjack()){
@@ -124,12 +167,8 @@ public class Driver {
 	    }
 	}
 	
-    }
-    
-    private static void checkForBust(){
-	
-	
-    }
+    }    
+       
     
     /**
      * Player's turn to hit or stay
@@ -147,18 +186,18 @@ public class Driver {
 		d1.hitPlayer(human);
 		printHands();
 	    }
-	    else if(response.equals("2") || human.hasBust()){
+	    else if(response.equals("2")){
 		stay = true;
 	    }
-	    if (human.getHand().isBust()) {
-		stay = true;
-		getInput("\nYou busted! :(\nPress 1 to continue.", "1");
-	    }
-	}while(stay == false);
+	}while(stay == false && !human.hasBust());
+	
+	if(human.hasBust()){
+	    System.out.println("You bust.\n");
+	}
 	
     }
     
-    /**
+       /**
      * Robot's turn to hit or stay
      */
     private static void robotTurn(){
@@ -170,19 +209,21 @@ public class Driver {
     }
     
    
-    
+    /**
+     * dealer's turn to hit or stay
+     */
     private static void dealerTurn(){
 	System.out.println("Dealer's turn\nThe current hands are: ");
 	printHands();
 	if(robot.hasBust() && human.hasBust()){
 	    System.out.println("Both players bust. Dealer wins.");
+
 	}
 	
 	else{	
 	d1.tryHit();
-	printHands();
 	}
-    }
+  }
     
     /**
      * Checks the current round number to see if the deck should be shuffled.
@@ -190,9 +231,15 @@ public class Driver {
      * @return true if the deck should be shuffled.
      */
     public static boolean shouldShuffle() {
-	return round > SHUFFLE_DECK;
+	return round == SHUFFLE_DECK;
     }
     
+
+    /**
+     * gets input to play again
+     * @param message
+     * @param input
+     */
     public static void getInput(String message, String input) {
 	System.out.println(message);
 	String response;
@@ -200,8 +247,15 @@ public class Driver {
 	 response = scnr.next();
 	}
 	while(!response.equals(input));
-    }
-    
+    }	
+	
+    /**
+     * gets input for what type of AI to play against
+     * @param message
+     * @param input
+     * @param input2
+     * @return
+     */
     public static boolean getInput2(String message, String input, String input2) {
 	System.out.println(message);
 	String response;
@@ -212,9 +266,10 @@ public class Driver {
 	return response.equals("1") ? true : false;
     }
 
-
-    private static void checkWinners(){
-	
+    /**
+     * checks for any winners in the game
+     */
+    private static void checkWinners(){	
 	checkForBlackJack();
 	System.out.println("\nThe final hands for the round are:\n\t");
 	printHands();
@@ -256,7 +311,7 @@ public class Driver {
 	    System.out.println("You lost the hand. You lost $" + human.getHandBet());
 	    human.lostHand();
 	}
-	if(d1.getPlayerScore() > robot.getPlayerScore()){
+	if(d1.getPlayerScore() > robot.getPlayerScore() && (!robot.getChips().noChips())){
 	    System.out.println("Robot lost the hand. Robot lost $" + robot.getHandBet());
 	    robot.lostHand();
 	}
@@ -265,7 +320,24 @@ public class Driver {
 	
 	
 	
+
 	
+    }
+    
+    /**
+
+     * checks that players have chips remaining to bet
+     */
+    private static void checkChips(){
+	if(human.getChips().noChips()){
+	    System.out.println("You have no chips left.");
+	    System.exit(0);
+	}
+	else if(robot.getChips().noChips()){
+	    System.out.println("Robot ran out of chips. Robot has left the game.");
+	    d1.removePlayer(robot);
+	}
+
     }
     
 }
