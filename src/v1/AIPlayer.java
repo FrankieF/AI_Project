@@ -9,9 +9,24 @@ package v1;
  */
 public class AIPlayer extends Player {
 
+    public final int HIGH_CARD_VALUE = 6;
+    public double HIT_PROBABILITY = 0;
+    public static final double HIT_AGGRESSIVE = .40;
+    public static final double HIT_CONSERVATIVE = .70;
+    private Dealer dealer;
+
+    public AIPlayer(boolean isAggressive, Dealer dealer) {
+	HIT_PROBABILITY = !isAggressive ? HIT_CONSERVATIVE : HIT_AGGRESSIVE;
+	this.dealer = dealer;
+    }
+
+    /**
+     * gets the bet for the AI player
+     * @return
+     */
     public int getBet() {
 	int count = count();
-	if (count > 0) 
+	if (count > 0)
 	    return highBet(count);
 	else
 	    return Dealer.getDealer().MIN_BET;
@@ -20,21 +35,65 @@ public class AIPlayer extends Player {
     public int count() {
 	int count = 0;
 	for (Card c : Deck.getDeck().getUsedCards()) {
-	    switch(c.getValue()){
+	    switch (c.getValue()) {
 	    case 2:
 	    case 3:
 	    case 4:
 	    case 5:
 	    case 6:
-	      count++;
-	      break;
+		count++;
+		break;
 	    case 10:
-	      count--;
-	      break;
-	  }
+		count--;
+		break;
+	    }
 	}
 	return count;
     }
+
+    public boolean isLessThanDealerFaceCard() {
+	return this.getHand().getHandScore() - 10 <= dealer.getHand().getPlayerFaceupCard();
+    }
+
+    public double changeConfidance(double chance) {
+	int dealerScore = dealer.getHand().getPlayerFaceupCard();
+	double _chance = chance;
+	if (isLessThanDealerFaceCard())
+	    _chance = dealerScore > HIGH_CARD_VALUE ? _chance * 1.05 : _chance;
+	else if (this.getHand().getHandScore() > 17) {
+	    _chance *= .90;
+	}
+	return _chance;
+
+    }
+
+    /**
+     * takes the AI player's turn
+     */
+    public void turn() {
+	boolean stay = false;
+	while (!stay) {
+	    int scoreNeeded = this.getHand().getScoreNeeded();
+	    double chance = getChanceOfWinning(scoreNeeded);
+	    double confidance = changeConfidance(chance);
+	    int count = count();
+	    double prob = chance * confidance;
+	    if (count != 0)
+		prob *= Math.abs(count);
+	    if (prob > HIT_PROBABILITY) {
+		this.addCardToHand(Dealer.getDealer().getDeck().dealCard());
+	    } else
+		stay = true;
+	    if (this.getHand().isBust())
+		stay = true;
+	    else if (this.getHand().isBlackJack()) {
+		stay = true;
+		Driver.getInput("\nThe robot got black jack! :0\nPress 1 to continue.", "1");
+	    }
+	   
+	}
+	 Driver.getInput("AI turn complete, new AI hand: " + this.toString() + "\nPress 1 to continue", "1");
+    }   
 
     /**
      * Checks the cards remamining in the game to make a decision on whether to stay or hit.
@@ -75,18 +134,25 @@ public double getChanceOfWinning(int scoreNeeded) {
 		cards[11]++;
 	    }
 	}
-	
-	int suitableCards = scoreNeeded * 4;
+	double suitableCards = scoreNeeded * 4;
 	int usedCards = 0;
 	for (int i = 2; i <= scoreNeeded; i++) {
 	    usedCards += cards[i];
 	}
 	
 	suitableCards -= usedCards;
-	return suitableCards / Deck.getDeck().getReadyCards().size();
+	double size = Deck.getDeck().getReadyCards().size();
+	return suitableCards / size;
     }
-    
-    public int highBet(int count) {
-	return 0;
-    }
+
+	public int highBet(int count) {
+		int ammntToBet = Dealer.getDealer().MIN_BET;
+	    	if(count >= 6)
+	    	    ammntToBet = Dealer.getDealer().MIN_BET * 4;
+	    	else if(count >= 3)
+	    	    ammntToBet = Dealer.getDealer().MIN_BET * 3;
+	    	else if (count >= 2)
+	    	    ammntToBet = Dealer.getDealer().MIN_BET * 2;
+	    	return ammntToBet;
+	   }
 }

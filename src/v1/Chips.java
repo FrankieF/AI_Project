@@ -55,6 +55,22 @@ public class Chips {
     }
     
     /**
+     * removes amount from chips
+     * @param lostAmount
+     */
+    public void removeAmount(int lostAmount){
+	this.amount -= lostAmount;
+    }
+    
+    /**
+     * adds amount to chips
+     * @param wonAmount
+     */
+    public void addAmount(int wonAmount){
+	this.amount += wonAmount;
+    }
+    
+    /**
      * checks if player is out of chips
      * @return
      */

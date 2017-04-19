@@ -13,6 +13,7 @@ public class Hand {
     private int handSize;  //number of cards in hand
     private int handScore; //score of card values in hand
     private int scoreNeeded; // score needed to get blackjack
+    private int bet;
     private final int BLACKJACK_VALUE = 21;
     private final int ACE_VALUE = 11;
     
@@ -20,9 +21,10 @@ public class Hand {
    /**
     * Hand constructor creates a new hand
     */
-  public Hand(){
+  public Hand(int bet){
       hand = new ArrayList<Card>();
       scoreNeeded = 21;
+      this.bet = bet;
   }
   
   /**
@@ -37,6 +39,19 @@ public class Hand {
 	  handScore += c.getValue();
 	  scoreNeeded = BLACKJACK_VALUE - handScore;
       }
+  }
+  
+  public ArrayList<Card> getHand() {
+      return this.hand;
+  }
+  
+  /**
+   * Returns the faceup card of the dealer.
+   * @author Francis Fasola
+   * @return The value of the face up card.
+   */
+  public int getPlayerFaceupCard() {
+      return this.hand.get(1).getValue();
   }
   
   /**
@@ -82,6 +97,14 @@ public class Hand {
       this.scoreNeeded = scoreNeeded;
   }
   
+  public int getBet(){
+      return bet;
+  }
+  
+  public void setBet(int bet){
+      this.bet=bet;
+  }
+  
   /**
    * adds a card to the hand
    * @param c
@@ -114,6 +137,20 @@ public class Hand {
    */
   public boolean isBust(){
       return handScore > BLACKJACK_VALUE;
+  }
+  
+  public boolean isBlackJack(){
+      return handScore == BLACKJACK_VALUE;
+  }
+  
+  /**
+   * clears hand and resets score and size
+   */
+  public void clear(){
+      this.hand.clear();
+      this.handScore = 0;
+      this.handSize = 0;
+      this.scoreNeeded = 21;
   }
   
   /**
